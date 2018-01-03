@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <base target="_top">
+    <link href='https://fonts.googleapis.com/css?family=Roboto' rel='stylesheet'  type='text/css'>
+    
+    <?!= include('Stylesheet'); ?>
+    
+    <?!= include('Javascript'); ?>
+    
+  </head>
+  <body>
+  
+    <div id="content"> 
+    
+      <h1>Welcome <?= user ?></h1>
+        <p>Feedback is due for the following cases for <?= month ?>:</p>
+        <? if (all_cases != []) { ?>
+          <? var incomplete_cases = getOutstanding(all_cases); ?>
+          <p>
+          <? for (var i = 0; i < incomplete_cases.length; i++) { ?>
+            <?= incomplete_cases[i][0] ?><br>
+          <? } ?>
+          </p>
+        <? } ?>
+        <form name="case_selector">
+          Select Case ID<br>
+          <select name="select1" required>
+            <option value="" disabled selected hidden>Choose</option>
+            <? for (var i = 0; i < cases.length; i++) { ?>
+              <option value="<?= cases[i][0] ?>"><?= cases[i][0]; ?></option>
+            <? } ?>
+          </select>
+        <div id="case_val"></div> 
+        </form>
+        
+        
+        <h1>Translation Feedback</h1>
+        <form>
+          TPR Grade:<br>
+          <select id="tpr_input" required>
+            <option value="" disabled selected hidden>Choose</option>
+            <option value="A">A</option>
+            <option value="B">B</option>
+            <option value="B-">B-</option>
+            <option value="C">C</option>
+            <option value="F">F</option>
+          </select>
+          <div id="tpr_val"></div>
+          <br>
+          <h2>Omissions and additions:</h2>
+          <input id="oAa_input" placeholder="Your answer"/><br>
+          <div id="oAa_val"></div>
+          <h2>Terminology:</h2>
+          <input id="term_input" placeholder="Your answer"/><br>
+          <div id="term_val"></div>
+          <h2>Mistranslation:</h2>
+          <input id="mistr_input" placeholder="Your answer"/><br>
+          <div id="mistr_val"></div>
+          <h2>Language:</h2>
+          <input id="lang_input" placeholder="Your answer"/><br>
+          <div id="lang_val"></div>
+          <h2>Grammar:</h2>
+          <input id="gram_input" placeholder="Your answer"/><br>
+          <div id="gram_val"></div>
+          <h2>Non-compliance:</h2>
+          <input id="non_c_input" placeholder="Your answer"/><br>
+          <div id="non_c_val"></div>
+          <h2>Comments:</h2>
+          <textarea id="comments_input" placeholder="Your answer" onkeyup="auto_grow(this)"></textarea><br>
+          <div id="comments_val"></div>
+        </form>
+        
+        
+        <h1>Editing Feedback</h1>
+        <form>
+          <h2>Content:</h2>
+          <input id="cont_input" placeholder="Your answer"/><br>
+          <div id="cont_val"></div>
+          <h2>Grammar:</h2>
+          <input id="gram_ed_input" placeholder="Your answer"/><br>
+          <div id="gram_ed_val"></div>
+          <h2>Mechanics:</h2>
+          <input id="mech_input" placeholder="Your answer"/><br>
+          <div id="mech_val"></div>
+          <h2>Style:</h2>
+          <input id="styl_input" placeholder="Your answer"/><br>
+          <div id="styl_val"></div>
+          <h2>Language:</h2>
+          <input id="lang_ed_input" placeholder="Your answer"/><br>
+          <div id="lang_ed_val"></div>
+          <h2>Process:</h2>
+          <input id="proc_input" placeholder="Your answer"/><br>
+          <div id="proc_val"></div>
+          <h2>Comments:</h2>
+          <textarea id="comments_ed_input" placeholder="Your answer" onkeyup="auto_grow(this)"></textarea>
+          <div id="comments_ed_val"></div>
+        </form>
+
+        <button onclick="getFeedback(<?= user ?>, <?= month_year ?>, <?= cases ?>)">Submit</button>
+      </div>
+   </body>
+</html>
+
+

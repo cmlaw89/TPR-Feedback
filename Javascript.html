@@ -1,0 +1,185 @@
+<script>
+  function getFeedback(user, month_year, cases) {
+    //Extracts the the data inserted into the form and sends it to the submitFeedback function
+  
+    var dropdown = document.querySelector("form").select1;
+    var selectedIndex = dropdown.selectedIndex;
+    var selectedValue = dropdown.options[selectedIndex].value;
+    var today = new Date();
+    var tpr = document.getElementById("tpr_input").value;
+    var oAa = document.getElementById("oAa_input").value;
+    var term = document.getElementById("term_input").value;
+    var mistr = document.getElementById("mistr_input").value;
+    var lang = document.getElementById("lang_input").value;
+    var gram = document.getElementById("gram_input").value;
+    var non_c = document.getElementById("non_c_input").value;
+    var comments = document.getElementById("comments_input").value.toString();
+    var cont = document.getElementById("cont_input").value;
+    var gram_ed = document.getElementById("gram_ed_input").value;
+    var mech = document.getElementById("mech_input").value;
+    var styl = document.getElementById("styl_input").value;
+    var lang_ed = document.getElementById("lang_ed_input").value;
+    var proc = document.getElementById("proc_input").value;
+    var comments_ed = document.getElementById("comments_ed_input").value.toString();
+    
+    var send = true;
+    
+    //From validation
+    //Translator
+    if (selectedValue == "") {
+      document.getElementById("case_val").innerHTML = "Please select the case number";
+      send = false;
+    }
+    else {
+      document.getElementById("case_val").innerHTML = "";
+    }
+    
+    if (tpr == "") {
+      document.getElementById("tpr_val").innerHTML = "Please select a grade";
+      send = false;
+    }
+    else {
+      document.getElementById("tpr_val").innerHTML = "";
+    }
+    
+    if (['1', '1.5', '2', '2.5', '3'].indexOf(oAa) == -1) {
+      document.getElementById("oAa_val").innerHTML = "Please insert 1, 1.5, 2, 2.5, or 3";
+      send = false;
+    }
+    else {
+      document.getElementById("oAa_val").innerHTML = "";
+    }
+    
+    if (['1', '1.5', '2', '2.5', '3'].indexOf(term) == -1) {
+      document.getElementById("term_val").innerHTML = "Please insert 1, 1.5, 2, 2.5, or 3";
+      send = false;
+    }
+    else {
+      document.getElementById("term_val").innerHTML = "";
+    }
+    
+    if (['1', '1.5', '2', '2.5', '3'].indexOf(mistr) == -1) {
+      document.getElementById("mistr_val").innerHTML = "Please insert 1, 1.5, 2, 2.5, or 3";
+      send = false;
+    }
+    else {
+      document.getElementById("mistr_val").innerHTML = "";
+    }
+    
+    if (['1', '1.5', '2', '2.5', '3'].indexOf(lang) == -1) {
+      document.getElementById("lang_val").innerHTML = "Please insert 1, 1.5, 2, 2.5, or 3";
+      send = false;
+    }
+    else {
+      document.getElementById("lang_val").innerHTML = "";
+    }
+    
+    if (['1', '1.5', '2', '2.5', '3'].indexOf(gram) == -1) {
+      document.getElementById("gram_val").innerHTML = "Please insert 1, 1.5, 2, 2.5, or 3";
+      send = false;
+    }
+    else {
+      document.getElementById("gram_val").innerHTML = "";
+    }
+    
+    if (['1', '1.5', '2', '2.5', '3'].indexOf(non_c) == -1) {
+      document.getElementById("non_c_val").innerHTML = "Please insert 1, 1.5, 2, 2.5, or 3";
+      send = false;
+    }
+    else {
+      document.getElementById("non_c_val").innerHTML = "";
+    }
+    
+    if (comments == "") {
+      document.getElementById("comments_val").innerHTML = "Please add comments";
+      send = false;
+    }
+    else {
+      document.getElementById("comments_val").innerHTML = "";
+    }
+    
+    //Editor
+    //Validation is not appied if the selected case has no editor
+    if (cases.indexOf([selectedValue, "--"]) == -1) {
+      if (['1', '1.5', '2', '2.5', '3'].indexOf(cont) == -1) {
+        document.getElementById("cont_val").innerHTML = "Please insert 1, 1.5, 2, 2.5, or 3";
+        send = false;
+      }
+      else {
+        document.getElementById("cont_val").innerHTML = "";
+      }
+    
+      if (['1', '1.5', '2', '2.5', '3'].indexOf(gram_ed) == -1) {
+        document.getElementById("gram_ed_val").innerHTML = "Please insert 1, 1.5, 2, 2.5, or 3";
+        send = false;
+      }
+      else {
+        document.getElementById("gram_ed_val").innerHTML = "";
+      }
+    
+      if (['1', '1.5', '2', '2.5', '3'].indexOf(mech) == -1) {
+        document.getElementById("mech_val").innerHTML = "Please insert 1, 1.5, 2, 2.5, or 3";
+        send = false;
+      }
+      else {
+        document.getElementById("mech_val").innerHTML = "";
+      }
+    
+      if (['1', '1.5', '2', '2.5', '3'].indexOf(styl) == -1) {
+        document.getElementById("styl_val").innerHTML = "Please insert 1, 1.5, 2, 2.5, or 3";
+        send = false;
+      }
+      else {
+        document.getElementById("styl_val").innerHTML = "";
+      }
+    
+      if (['1', '1.5', '2', '2.5', '3'].indexOf(lang_ed) == -1) {
+        document.getElementById("lang_ed_val").innerHTML = "Please insert 1, 1.5, 2, 2.5, or 3";
+        send = false;
+      }
+      else {
+        document.getElementById("lang_ed_val").innerHTML = "";
+      }
+    
+      if (['1', '1.5', '2', '2.5', '3'].indexOf(proc) == -1) {
+        document.getElementById("proc_val").innerHTML = "Please insert 1, 1.5, 2, 2.5, or 3";
+        send = false;
+      }
+      else {
+        document.getElementById("proc_val").innerHTML = "";
+      }
+    
+      if (comments_ed == "") {
+        document.getElementById("comments_ed_val").innerHTML = "Please add comments";
+        send = false;
+      }
+      else {
+        document.getElementById("comments_ed_val").innerHTML = "";
+      }
+    }
+    else {
+      document.getElementById("cont_val").innerHTML = "";
+      document.getElementById("gram_ed_val").innerHTML = "";
+      document.getElementById("mech_val").innerHTML = "";
+      document.getElementById("styl_val").innerHTML = "";
+      document.getElementById("lang_ed_val").innerHTML = "";
+      document.getElementById("proc_val").innerHTML = "";
+      document.getElementById("comments_ed_val").innerHTML = "";
+    }
+    
+    if (send) {
+      google.script.run
+        .withSuccessHandler(google.script.host.close)
+        .submitFeedback([today.toString(), user, selectedValue + month_year, 
+                tpr, oAa, term, mistr, lang, gram, non_c, comments,
+                cont, gram_ed, mech, styl, lang_ed, proc, comments_ed]);
+    }
+  }
+  
+  function auto_grow(element) {
+    //auto adujst the hieght of a textarea (comment box)
+  
+    element.style.height = "5px";
+    element.style.height = (element.scrollHeight)+"px";
+  }
+</script>
