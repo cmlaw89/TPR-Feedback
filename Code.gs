@@ -72,8 +72,8 @@ function submitFeedback(values) {
   
   //Delete existing feedback with the same case ID
   var feedback_sheet = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("TPR Feedback");
-  var case_ID = values[1];
-  var case_ID_column = feedback_sheet.getRange(2, 2, feedback_sheet.getLastRow() - 1, 1).getValues();
+  var case_ID = values[2];
+  var case_ID_column = feedback_sheet.getRange(2, 3, feedback_sheet.getLastRow() - 1, 1).getValues();
   var row_index = -1;
   var i = 0;
   while (row_index == -1 && i < case_ID_column.length) {
@@ -236,8 +236,9 @@ function getFeedback() {
   for (var i = 2; i < TPR_Feedback_sheet.getLastRow() + 1; i++) {
     var entry = TPR_Feedback_sheet.getRange(i, 2, 1, 17).getValues()[0];
     if (entry[0] == user) {
-      entry[9] = entry[9].toString();
-      entry[16] = entry[16].toString();
+      for (var j = 0; j < entry.length; j++) {
+        entry[j] = entry[j].toString();
+      }
       feedback.push(entry.slice(1));
     }
   }
