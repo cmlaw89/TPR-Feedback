@@ -28,7 +28,7 @@ function viewFeedback() {
 }
 
 
-function tprFeedback(date, month) {
+function tprFeedback(date, month) {  
   //Opens the feedback sidebar
   var months = {0: "January", 
                 1: "February",
@@ -41,9 +41,11 @@ function tprFeedback(date, month) {
                 8: "September",
                 9: "October",
                 10: "November",
-                11: "December"} 
+                11: "December"}
   
-  var user =  Session.getActiveUser().getEmail().split("@")[0].substr(0,1).toUpperCase() + Session.getActiveUser().getEmail().split("@")[0].substr(1)
+  var users = getUsers();
+  var user =  users[Session.getActiveUser().getEmail()];
+  
   var all_cases = getCases(user, month);
   if (all_cases == false) {
     SpreadsheetApp.getUi().alert("You have no cases assigned for this month.", SpreadsheetApp.getUi().ButtonSet.OK);
@@ -212,11 +214,10 @@ function getOutstanding(cases) {
     var day = Object.keys(cases)[i];
     all_cases = all_cases.concat(cases[day]);
   }
-      
   
   var incomplete_cases = []
   for (i = 0; i < all_cases.length; i++) {
-    if (completed_cases.indexOf(all_cases[i]) == -1) {
+    if (completed_cases.indexOf(all_cases[i][0]) == -1) {
       incomplete_cases.push(all_cases[i]);
     }
   }
@@ -230,7 +231,9 @@ function getOutstanding(cases) {
 function getFeedback() {
   //Extracts the submitted feedback for the active user
   
-  var user = Session.getActiveUser().getEmail().split("@")[0].substr(0,1).toUpperCase() + Session.getActiveUser().getEmail().split("@")[0].substr(1);
+  var users = getUsers();
+  var user =  users[Session.getActiveUser().getEmail()];
+  
   var TPR_Feedback_sheet = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("TPR Feedback");
   var feedback = []
   for (var i = 2; i < TPR_Feedback_sheet.getLastRow() + 1; i++) {
@@ -246,6 +249,18 @@ function getFeedback() {
 }
 
 
+function getUsers() {
+  // Creates a dictionary of users' names and email addresses (e.g., users = {"adamhuang@wallace.tw": "Adam", ...})
+  
+  var list_sheet = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Lists");
+  var emails = list_sheet.getRange(3, 1, list_sheet.getLastRow()-3, 2).getValues();
+  var users = {};
+  for (var i = 0; i < emails.length; i++) {
+    users[emails[i][1]] = emails[i][0];
+  }
+  
+  return users
+}
 
 
 function include(filename) {
