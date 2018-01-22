@@ -1,6 +1,7 @@
 <script>
   function getFeedback(user, month_year, cases) {
     //Extracts the the data inserted into the form and sends it to the submitFeedback function
+    document.getElementById("submit_button").disabled = true;
   
     var dropdown = document.querySelector("form").select1;
     var selectedIndex = dropdown.selectedIndex;
