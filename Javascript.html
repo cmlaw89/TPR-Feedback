@@ -101,7 +101,7 @@
     
     //Editor
     //Validation is not appied if the selected case has no editor
-    if (cases.indexOf([selectedValue, "--"]) == -1) {
+    if ((cases.indexOf([selectedValue, "--"]) == -1)&&(cases.indexOf([selectedValue, ""]) == -1)) {
       if (['1', '1.5', '2', '2.5', '3'].indexOf(cont) == -1) {
         document.getElementById("cont_val").innerHTML = "Please insert 1, 1.5, 2, 2.5, or 3";
         send = false;
