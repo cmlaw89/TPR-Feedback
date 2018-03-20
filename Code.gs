@@ -28,7 +28,7 @@ function viewFeedback() {
 }
 
 
-function tprFeedback(date, month) {  
+function tprFeedback(date, month) { 
   //Opens the feedback sidebar
   var months = {0: "January", 
                 1: "February",
@@ -235,18 +235,30 @@ function getFeedback() {
   var user =  users[Session.getActiveUser().getEmail()];
   
   var TPR_Feedback_sheet = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("TPR Feedback");
+  var all_feedback = TPR_Feedback_sheet.getRange(2, 1, TPR_Feedback_sheet.getLastRow(), 18).getValues();
+  all_feedback = [].concat.apply([], all_feedback);
+  var indexes = getAllIndexes(all_feedback, user);
   var feedback = []
-  for (var i = 2; i < TPR_Feedback_sheet.getLastRow() + 1; i++) {
-    var entry = TPR_Feedback_sheet.getRange(i, 2, 1, 17).getValues()[0];
-    if (entry[0] == user) {
-      for (var j = 0; j < entry.length; j++) {
-        entry[j] = entry[j].toString();
-      }
-      feedback.push(entry.slice(1));
-    }
+  for (var i = 0; i < indexes.length; i++) {
+    var entry = all_feedback.slice(indexes[i] + 1, indexes[i] + 17);
+    entry = entry.map( function (x) {return x.toString()} );
+    feedback.push(entry);
   }
-  return feedback.reverse();
+  
+  return feedback;
 }
+
+function getFeedbackCase(caseId) {
+  //Returns the feedback that was submitted for the given case ID
+  var cases = getFeedback();
+  cases = [].concat.apply([], cases);
+  var index = cases.indexOf(caseId);
+  if (index != -1) {
+    return cases.slice(index, index + 16)
+  }
+}
+
+
 
 
 function getUsers() {
@@ -270,8 +282,14 @@ function include(filename) {
       .getContent();
 }
 
-
-
 function pad(n) {
     return (n < 10) ? ("0" + n) : n;
+}
+
+function getAllIndexes(arr, val) {
+    var indexes = [], i = -1;
+    while ((i = arr.indexOf(val, i+1)) != -1){
+        indexes.push(i);
+    }
+    return indexes;
 }

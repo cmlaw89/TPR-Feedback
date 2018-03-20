@@ -101,7 +101,7 @@
     
     //Editor
     //Validation is not appied if the selected case has no editor
-    if ((cases.indexOf([selectedValue, "--"]) == -1)||(cases.indexOf([selectedValue, ""]) == -1)) {
+    if ((cases.indexOf([selectedValue, "--"]) == -1)&&(cases.indexOf([selectedValue, ""]) == -1)) {
       if (['1', '1.5', '2', '2.5', '3'].indexOf(cont) == -1) {
         document.getElementById("cont_val").innerHTML = "Please insert 1, 1.5, 2, 2.5, or 3";
         send = false;
@@ -186,4 +186,54 @@
     element.style.height = "5px";
     element.style.height = (element.scrollHeight)+"px";
   }
+  
+  function addExistingFeedback(month_year){
+    //Extracts the feedback for the selected case from the database
+    var dropdown = document.querySelector("form").select1;
+    var selectedIndex = dropdown.selectedIndex;
+    var selectedValue = dropdown.options[selectedIndex].value;
+    google.script.run
+      .withSuccessHandler(onSuccess)
+      .getFeedbackCase(selectedValue + month_year);
+  }
+  
+  function onSuccess(my_array) {
+    //Updates the feedback input fields with the existing values
+    if (my_array) {
+      document.getElementById("tpr_input").value = my_array[1];
+      document.getElementById("oAa_input").value = my_array[2];
+      document.getElementById("term_input").value = my_array[3];
+      document.getElementById("mistr_input").value = my_array[4];
+      document.getElementById("lang_input").value = my_array[5];
+      document.getElementById("gram_input").value = my_array[6];
+      document.getElementById("non_c_input").value = my_array[7];
+      document.getElementById("comments_input").value = my_array[8];
+      document.getElementById("cont_input").value = my_array[9];
+      document.getElementById("gram_ed_input").value = my_array[10];
+      document.getElementById("mech_input").value = my_array[11];
+      document.getElementById("styl_input").value = my_array[12];
+      document.getElementById("lang_ed_input").value = my_array[13];
+      document.getElementById("proc_input").value = my_array[14];
+      document.getElementById("comments_ed_input").value = my_array[15];
+    }
+    else {
+      document.getElementById("tpr_input").value = "";
+      document.getElementById("oAa_input").value = "";
+      document.getElementById("term_input").value = "";
+      document.getElementById("mistr_input").value = "";
+      document.getElementById("lang_input").value = "";
+      document.getElementById("gram_input").value = "";
+      document.getElementById("non_c_input").value = "";
+      document.getElementById("comments_input").value = "";
+      document.getElementById("cont_input").value = "";
+      document.getElementById("gram_ed_input").value = "";
+      document.getElementById("mech_input").value = "";
+      document.getElementById("styl_input").value = "";
+      document.getElementById("lang_ed_input").value = "";
+      document.getElementById("proc_input").value = "";
+      document.getElementById("comments_ed_input").value = "";
+    }
+  }
+
+  
 </script>

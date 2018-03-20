@@ -25,7 +25,7 @@
         <? } ?>
         <form name="case_selector">
           Select Case ID<br>
-          <select name="select1" required>
+          <select name="select1" onChange="addExistingFeedback(<?= month_year ?>)" required>
             <option value="" disabled selected hidden>Choose</option>
             <? for (var i = 0; i < cases.length; i++) { ?>
               <option value="<?= cases[i][0] ?>"><?= cases[i][0]; ?></option>
