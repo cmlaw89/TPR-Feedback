@@ -167,11 +167,13 @@ function getCases(user, month) {
   }
   
   var day = "";
+  //Use regular expression to match case numbers (e.g., O001881 or O001881-1)
+  var regex = new RegExp('^O[0-9]{5}.*[0-9]$')
   for (var i = 0; i < date_index; i++) {
     if (day_indexes.indexOf(i) != -1) {
       day = cases[i][0];
     }
-    if (cases[i][0].length == 7) {
+    if (regex.test(cases[i][0])) {
       var t_proofreader = cases[i][2].trim()
       if (Object.keys(assigned_cases).indexOf(t_proofreader) == -1) {
         assigned_cases[t_proofreader] = {};
@@ -245,7 +247,7 @@ function getFeedback() {
     feedback.push(entry);
   }
   
-  return feedback;
+  return feedback.reverse();
 }
 
 function getFeedbackCase(caseId) {
