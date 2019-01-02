@@ -30,11 +30,9 @@
   </script>
   <script>
   function sendDate() {
-    var month = $("#datepicker").datepicker( 'getDate' ).getMonth();
-    var date = $("#datepicker").datepicker( 'getDate' ).getDate();
     google.script.run
         .withSuccessHandler(google.script.host.close)
-        .tprFeedback(date, month);
+        .tprFeedback($("#datepicker").datepicker( 'getDate' ).toString());
   }
   </script>
 </head>

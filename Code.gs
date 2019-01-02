@@ -28,7 +28,7 @@ function viewFeedback() {
 }
 
 
-function tprFeedback(date, month) { 
+function tprFeedback(date) { 
   //Opens the feedback sidebar
   var months = {0: "January", 
                 1: "February",
@@ -43,15 +43,17 @@ function tprFeedback(date, month) {
                 10: "November",
                 11: "December"}
   
+  var date = new Date(date)
+  
   var users = getUsers();
   var user =  users[Session.getActiveUser().getEmail()];
   
-  var all_cases = getCases(user, month);
+  var all_cases = getCases(user, date);
   if (all_cases == false) {
     SpreadsheetApp.getUi().alert("You have no cases assigned for this month.", SpreadsheetApp.getUi().ButtonSet.OK);
   }  
   else {
-    var cases = all_cases[date]
+    var cases = all_cases[date.getDate()]
     if (cases == undefined) {
       SpreadsheetApp.getUi().alert("You have no cases assigned for this day.", SpreadsheetApp.getUi().ButtonSet.OK);
     }
@@ -61,8 +63,8 @@ function tprFeedback(date, month) {
       html.cases = cases;
       html.all_cases = all_cases;
       html.user = user;
-      html.month_year = "-" + pad(month+1) + "-" + year;
-      html.month = months[month]
+      html.month_year = "-" + pad(date.getMonth()+1) + "-" + year;
+      html.month = months[date.getMonth()]
       html = html.evaluate().setTitle("Translation Proofreading Feedback");
       SpreadsheetApp.getUi().showSidebar(html);
     }
@@ -95,10 +97,10 @@ function submitFeedback(values) {
 
 
 
-function getCases(user, month) {
+function getCases(user, date) {
   //Searches the case ID columns of the active month sheet.
   //Returns an array of the case IDs for the specified translation proofreader (user)
-
+  
   var today = new Date();
   var today_date = today.getDate();
   var today_month = today.getMonth();
@@ -118,7 +120,7 @@ function getCases(user, month) {
   
   
   var ss = SpreadsheetApp.getActiveSpreadsheet();
-  var month_sheet = ss.getSheetByName(months[month]);
+  var month_sheet = ss.getSheetByName(months[date.getMonth()] + " " + date.getFullYear());
   
   var cases = [];
   var num_rows = month_sheet.getMaxRows();
@@ -142,7 +144,7 @@ function getCases(user, month) {
   
   //Find the index of tomorrows date if the current month is selected
   var date_index = 0;
-  if (today_month == month) {
+  if (today_month == date.getMonth()) {
     var found = false;
     while (!found && date_index < cases.length) {
       if (cases[date_index][0] == today_date+1) {
@@ -266,7 +268,7 @@ function getFeedbackCase(caseId) {
 function getUsers() {
   // Creates a dictionary of users' names and email addresses (e.g., users = {"adamhuang@wallace.tw": "Adam", ...})
   
-  var list_sheet = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Lists");
+  var list_sheet = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Translators");
   var emails = list_sheet.getRange(3, 1, list_sheet.getLastRow()-3, 2).getValues();
   var users = {};
   for (var i = 0; i < emails.length; i++) {
