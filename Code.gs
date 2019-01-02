@@ -58,7 +58,7 @@ function tprFeedback(date) {
       SpreadsheetApp.getUi().alert("You have no cases assigned for this day.", SpreadsheetApp.getUi().ButtonSet.OK);
     }
     else {
-      var year = SpreadsheetApp.getActiveSpreadsheet().getName().split(" ")[2].slice(2, 4);
+      var year = date.getFullYear();
       var html = HtmlService.createTemplateFromFile('Index');
       html.cases = cases;
       html.all_cases = all_cases;
